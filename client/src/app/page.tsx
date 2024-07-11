@@ -25,7 +25,7 @@ export default function Home() {
   function getTwitterOauthUrl() {
     const rootUrl = 'https://twitter.com/i/oauth2/authorize';
     const options = {
-      redirect_uri: 'http://www.localhost:3001/oauth/twitter',
+      redirect_uri: `${process.env.SERVER_URI}/oauth/twitter`,
       client_id: process.env.TWITTER_CLIENT_ID!,
       state: 'state',
       response_type: 'code',

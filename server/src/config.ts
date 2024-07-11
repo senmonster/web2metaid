@@ -1,35 +1,16 @@
-// import { PrismaClient } from '@prisma/client';
 import { TwitterUser } from './oauth2';
-import User from './models/user';
+import XUser from './models/xUser';
 // import { Response } from 'express';
 // import jwt from 'jsonwebtoken';
 // import  { IUser } from './models/user';
 
 export const CLIENT_URL = process.env.CLIENT_URL!;
 export const SERVER_PORT = process.env.SERVER_PORT!;
-// export const prisma = new PrismaClient();
-
-// step 3
-// export function upsertUserWithPostgre(twitterUser: TwitterUser) {
-//   // create a new user in our database or return an old user who already signed up earlier
-//   return prisma.user.upsert({
-//     create: {
-//       username: twitterUser.username,
-//       id: twitterUser.id,
-//       name: twitterUser.name,
-//       type: 'twitter',
-//     },
-//     update: {
-//       id: twitterUser.id,
-//     },
-//     where: { id: twitterUser.id },
-//   });
-// }
 
 export async function upsertUserWithMongo(twitterUser: TwitterUser) {
   // create a new user in our database or return an old user who already signed up earlier
   try {
-    const updatedUser = await User.findOneAndUpdate(
+    const updatedUser = await XUser.findOneAndUpdate(
       { id: twitterUser.id }, // 查询条件
       {
         username: twitterUser.username,

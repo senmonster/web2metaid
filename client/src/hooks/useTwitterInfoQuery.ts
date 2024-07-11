@@ -16,7 +16,7 @@ export function useTwitterInfoQuery() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get<any, AxiosResponse<User>>(`http://www.localhost:3001/me`, {
+      .get<any, AxiosResponse<User>>(`${process.env.SERVER_URI}/me`, {
         withCredentials: true,
       })
       .then((v) => {

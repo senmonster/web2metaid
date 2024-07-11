@@ -20,7 +20,7 @@ const BasicAuthToken = Buffer.from(
 export const twitterOauthTokenParams = {
   client_id: TWITTER_OAUTH_CLIENT_ID,
   code_verifier: '8KxxO-RPl0bLSxX5AWwgdiFbMnry_VOKzFeIlVA7NoA',
-  redirect_uri: `http://www.localhost:3001/oauth/twitter`,
+  redirect_uri: `${process.env.SERVER_URI}/oauth/twitter`,
   grant_type: 'authorization_code',
 };
 
@@ -83,7 +83,7 @@ export async function getTwitterUser(
   }
 }
 
-// the function which will be called when twitter redirects to the server at https://www.localhost:3001/oauth/twitter
+// the function which will be called when twitter redirects to the server at `${process.env.SERVER_URI}/oauth/twitter`
 export async function twitterOauth(
   req: Request<any, any, any, { code: string }>,
   res: Response
