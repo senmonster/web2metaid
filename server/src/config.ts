@@ -1,29 +1,31 @@
-import { PrismaClient } from '@prisma/client';
-import { Response } from 'express';
+// import { PrismaClient } from '@prisma/client';
 import { TwitterUser } from './oauth2';
-import jwt from 'jsonwebtoken';
-import User, { IUser } from './models/user';
+import User from './models/user';
+// import { Response } from 'express';
+// import jwt from 'jsonwebtoken';
+// import  { IUser } from './models/user';
 
 export const CLIENT_URL = process.env.CLIENT_URL!;
 export const SERVER_PORT = process.env.SERVER_PORT!;
-export const prisma = new PrismaClient();
+// export const prisma = new PrismaClient();
 
 // step 3
-export function upsertUserWithPostgre(twitterUser: TwitterUser) {
-  // create a new user in our database or return an old user who already signed up earlier
-  return prisma.user.upsert({
-    create: {
-      username: twitterUser.username,
-      id: twitterUser.id,
-      name: twitterUser.name,
-      type: 'twitter',
-    },
-    update: {
-      id: twitterUser.id,
-    },
-    where: { id: twitterUser.id },
-  });
-}
+// export function upsertUserWithPostgre(twitterUser: TwitterUser) {
+//   // create a new user in our database or return an old user who already signed up earlier
+//   return prisma.user.upsert({
+//     create: {
+//       username: twitterUser.username,
+//       id: twitterUser.id,
+//       name: twitterUser.name,
+//       type: 'twitter',
+//     },
+//     update: {
+//       id: twitterUser.id,
+//     },
+//     where: { id: twitterUser.id },
+//   });
+// }
+
 export async function upsertUserWithMongo(twitterUser: TwitterUser) {
   // create a new user in our database or return an old user who already signed up earlier
   try {
