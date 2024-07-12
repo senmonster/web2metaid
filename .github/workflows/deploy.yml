@@ -47,6 +47,13 @@ jobs:
           rsync -avz --exclude=".git" --exclude="node_modules" web2metaid-server/ root@${{secrets.REMOTE_HOST}}:${{secrets.REMOTE_SERVER_DIR}}
           ls -a
 
+      - name: 卸载旧版本的 Node.js
+        run: |
+          ssh root@${{secrets.REMOTE_HOST}} "
+            apt-get remove -y nodejs libnode-dev;
+            apt-get autoremove -y;
+          "    
+
       - name: 安装 Node.js 和 pnpm
         run: |
           ssh root@${{secrets.REMOTE_HOST}} "
