@@ -47,15 +47,21 @@ jobs:
           rsync -avz --exclude=".git" --exclude="node_modules" web2metaid-server/ root@${{secrets.REMOTE_HOST}}:${{secrets.REMOTE_SERVER_DIR}}
           ls -a
 
+      - name: 安装 Node.js 和 pnpm
+        run: |
+          ssh root@${{secrets.REMOTE_HOST}} "
+            curl -fsSL https://deb.nodesource.com/setup_20.x | bash -;
+            apt-get install -y nodejs;
+            node -v;
+            npm -v;
+            npm install -g pnpm;
+          "    
+
       - name: 启动 pm2
         run: |
           ssh root@${{secrets.REMOTE_HOST}} "
             cd  ${{secrets.REMOTE_SERVER_DIR}};
-            ls -a;
-            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -;
-            apt-get install -y nodejs;
-            apt-get install -y npm;
-            npm install -g pnpm;
+            ls -a;        
             pnpm install;
             pnpm prod;
           "
