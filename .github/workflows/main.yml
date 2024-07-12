@@ -20,7 +20,7 @@ jobs:
       - name: 拉取项目代码
         uses: actions/checkout@v3
         with:
-          path: '/'
+          path: 'web2metaid-server'
 
       - name: 设置 id_rsa
         run: |
@@ -40,7 +40,7 @@ jobs:
 
       - name: 将项目复制到远程服务器对应目录
         run: |
-          rsync -avz --exclude=".git" --exclude="node_modules" / root@${{secrets.REMOTE_HOST}}:${{secrets.REMOTE_SERVER_DIR}}
+          rsync -avz --exclude=".git" --exclude="node_modules" web2metaid-server/ root@${{secrets.REMOTE_HOST}}:${{secrets.REMOTE_SERVER_DIR}}
           ls -a
 
       - name: 启动 pm2
