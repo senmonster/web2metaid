@@ -23,8 +23,8 @@ jobs:
           path: 'web2metaid-server'
 
       - name: 打印 REMOTE_HOST
-        run: ｜
-          echo "${{secrets.REMOTE_HOST}}"
+        run: 
+          echo "${{secrets.REMOTE_HOST}}"  &&  echo "${{secrets.REMOTE_SERVER_DIR}}" 
  
       - name: 设置 id_rsa
         run: |
