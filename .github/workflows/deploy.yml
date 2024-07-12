@@ -52,6 +52,8 @@ jobs:
           ssh root@${{secrets.REMOTE_HOST}} "
             cd  ${{secrets.REMOTE_SERVER_DIR}};
             ls -a;
+            curl -fsSL https://deb.nodesource.com/setup_20.x | sudo bash -;
+            apt-get install -y nodejs;
             apt-get install -y npm;
             npm install -g pnpm;
             pnpm install;
