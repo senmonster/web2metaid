@@ -69,7 +69,8 @@ jobs:
         run: |
           ssh root@${{secrets.REMOTE_HOST}} "
             cd  ${{secrets.REMOTE_SERVER_DIR}};
-            ls -a;        
+            ls -a;   
+            pnpm build;     
             pnpm install;
             pnpm prod;
           "
