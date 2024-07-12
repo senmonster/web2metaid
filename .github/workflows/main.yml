@@ -22,6 +22,10 @@ jobs:
         with:
           path: 'web2metaid-server'
 
+      - name: 打印 REMOTE_HOST
+        run: ｜
+          echo "${{secrets.REMOTE_HOST}}"
+ 
       - name: 设置 id_rsa
         run: |
           mkdir -p ~/.ssh/
