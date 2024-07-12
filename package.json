@@ -6,7 +6,7 @@
     "build": "tsc --sourceMap false",
     "build:watch": "tsc -w",
     "start:watch": "nodemon dist/index.js",
-    "dev": "concurrently \"yarn build:watch\" \"yarn start:watch\" --names \"tsc,node\" -c \"blue,green\"",
+    "dev": "concurrently \"pnpm build:watch\" \"pnpm start:watch\" --names \"tsc,node\" -c \"blue,green\"",
     "prod": "concurrently \"pm2 start ecosystem.config.js --only tsc\" \"pm2 start ecosystem.config.js --only server-web2metaid\"",
     "test": "jest"
   },
