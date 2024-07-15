@@ -70,21 +70,21 @@ app.get('/me', async (req, res) => {
   }
 });
 
-app.get('/auth/telegram', async (req, res) => {
-  const validator = new AuthDataValidator({ botToken: process.env.BOT_TOKEN });
+// app.get('/auth/telegram', async (req, res) => {
+//   const validator = new AuthDataValidator({ botToken: process.env.BOT_TOKEN });
 
-  const data = urlStrToAuthDataMap(req.url);
+//   const data = urlStrToAuthDataMap(req.url);
 
-  try {
-    const user = await validator.validate(data);
+//   try {
+//     const user = await validator.validate(data);
 
-    // The data is now valid and you can sign in the user.
+//     // The data is now valid and you can sign in the user.
 
-    console.log(user);
-  } catch (error) {
-    console.error(error);
-  }
-});
+//     console.log(user);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
 
 app.listen(SERVER_PORT, () =>
   console.log(`Server listening on port ${SERVER_PORT}`)
