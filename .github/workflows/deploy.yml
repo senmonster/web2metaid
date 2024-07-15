@@ -34,13 +34,13 @@ jobs:
           ssh-keyscan ${{secrets.REMOTE_HOST}} >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
 
-      - name: 将远程服务器的对应目录下所有文件及文件夹删除
-        run: | # type-room/server
-          ssh www@${{secrets.REMOTE_HOST}} "
-            cd ${{secrets.REMOTE_SERVER_DIR}};
-            pm2 kill;
-            rm -rf ./*;
-          "
+      # - name: 将远程服务器的对应目录下所有文件及文件夹删除
+      #   run: | # type-room/server
+      #     ssh www@${{secrets.REMOTE_HOST}} "
+      #       cd ${{secrets.REMOTE_SERVER_DIR}};
+      #       pm2 kill;
+      #       rm -rf ./*;
+      #     "
 
       - name: 将项目复制到远程服务器对应目录
         run: |
