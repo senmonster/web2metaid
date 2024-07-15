@@ -3,8 +3,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import express from 'express';
 import jwt from 'jsonwebtoken';
-import { AuthDataValidator } from '@telegram-auth/server';
-import { urlStrToAuthDataMap } from '@telegram-auth/server/utils';
+// import { AuthDataValidator } from '@telegram-auth/server';
+// import { urlStrToAuthDataMap } from '@telegram-auth/server/utils';
 import 'dotenv/config';
 
 import { CLIENT_URL, COOKIE_NAME, JWT_SECRET, SERVER_PORT } from './config';
