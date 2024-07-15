@@ -47,23 +47,23 @@ jobs:
           rsync -avz --exclude=".git" --exclude="node_modules" web2metaid-server/ www@${{secrets.REMOTE_HOST}}:${{secrets.REMOTE_SERVER_DIR}}
           ls -a
 
-      - name: 卸载旧版本的 Node.js
-        run: |
-          ssh www@${{secrets.REMOTE_HOST}} "
-            apt-get remove -y nodejs libnode-dev;
-            apt-get autoremove -y;
-          "    
+      # - name: 卸载旧版本的 Node.js
+      #   run: |
+      #     ssh www@${{secrets.REMOTE_HOST}} "
+      #       apt-get remove -y nodejs libnode-dev;
+      #       apt-get autoremove -y;
+      #     "    
 
-      - name: 安装 Node.js 、 pnpm 、 pm2
-        run: |
-          ssh www@${{secrets.REMOTE_HOST}} "
-            curl -fsSL https://deb.nodesource.com/setup_20.x | bash -;
-            apt-get install -y nodejs;
-            node -v;
-            npm -v;
-            npm install -g pnpm;
-            npm install -g pm2
-          "    
+      # - name: 安装 Node.js 、 pnpm 、 pm2
+      #   run: |
+      #     ssh www@${{secrets.REMOTE_HOST}} "
+      #       curl -fsSL https://deb.nodesource.com/setup_20.x | bash -;
+      #       apt-get install -y nodejs;
+      #       node -v;
+      #       npm -v;
+      #       npm install -g pnpm;
+      #       npm install -g pm2
+      #     "    
       
       - name: 启动 pm2
         run: |
