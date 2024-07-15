@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
 // import { AuthDataValidator } from '@telegram-auth/server';
 // import { urlStrToAuthDataMap } from '@telegram-auth/server/utils';
 import 'dotenv/config';
-
+// load config
 import { CLIENT_URL, COOKIE_NAME, JWT_SECRET, SERVER_PORT } from './config';
 import { twitterOauth } from './oauth2';
 // import { getTwitterUser  } from './oauth2';
