@@ -8,9 +8,9 @@ importers:
 
   .:
     dependencies:
-      '@prisma/client':
-        specifier: ^4.4.0
-        version: 4.16.2(prisma@4.16.2)
+      '@telegram-auth/server':
+        specifier: ^1.0.3
+        version: 1.0.3
       argon2:
         specifier: ^0.30.1
         version: 0.30.3
@@ -35,6 +35,9 @@ importers:
       mongoose:
         specifier: ^8.5.0
         version: 8.5.0
+      utils:
+        specifier: link:@telegram-auth/server/utils
+        version: link:@telegram-auth/server/utils
     devDependencies:
       '@types/cookie-parser':
         specifier: ^1.4.3
@@ -57,9 +60,6 @@ importers:
       nodemon:
         specifier: ^2.0.20
         version: 2.0.22
-      prisma:
-        specifier: ^4.4.0
-        version: 4.16.2
       typescript:
         specifier: ^4.8.4
         version: 4.9.5
@@ -81,20 +81,8 @@ packages:
     resolution: {integrity: sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==}
     engines: {node: '>=10'}
 
-  '@prisma/client@4.16.2':
-    resolution: {integrity: sha512-qCoEyxv1ZrQ4bKy39GnylE8Zq31IRmm8bNhNbZx7bF2cU5aiCCnSa93J2imF88MBjn7J9eUQneNxUQVJdl/rPQ==}
-    engines: {node: '>=14.17'}
-    peerDependencies:
-      prisma: '*'
-    peerDependenciesMeta:
-      prisma:
-        optional: true
-
-  '@prisma/engines-version@4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81':
-    resolution: {integrity: sha512-q617EUWfRIDTriWADZ4YiWRZXCa/WuhNgLTVd+HqWLffjMSPzyM5uOWoauX91wvQClSKZU4pzI4JJLQ9Kl62Qg==}
-
-  '@prisma/engines@4.16.2':
-    resolution: {integrity: sha512-vx1nxVvN4QeT/cepQce68deh/Turxy5Mr+4L4zClFuK1GlxN3+ivxfuv+ej/gvidWn1cE1uAhW7ALLNlYbRUAw==}
+  '@telegram-auth/server@1.0.3':
+    resolution: {integrity: sha512-H0HLuAdP0V6eXqypx/DN4dAtVpiF2gLN3xZHQpNUfsMWIAgMCjiVtSGK+ig1mkcWezCoXAI49kauUsJpawB0Mg==}
 
   '@types/body-parser@1.19.5':
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
@@ -726,11 +714,6 @@ packages:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
 
-  prisma@4.16.2:
-    resolution: {integrity: sha512-SYCsBvDf0/7XSJyf2cHTLjLeTLVXYfqp7pG5eEVafFLeT0u/hLFz/9W196nDRGUOo1JfPatAEb+uEnTQImQC1g==}
-    engines: {node: '>=14.17'}
-    hasBin: true
-
   proxy-addr@2.0.7:
     resolution: {integrity: sha512-llQsMLSUDUPT44jdrU/O37qlnifitDP+ZwrmmZcoSKyLKvtZxpyV0n2/bD/N4tBAAZ/gJEdZU7KMraoK1+XYAg==}
     engines: {node: '>= 0.10'}
@@ -997,15 +980,7 @@ snapshots:
 
   '@phc/format@1.0.0': {}
 
-  '@prisma/client@4.16.2(prisma@4.16.2)':
-    dependencies:
-      '@prisma/engines-version': 4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81
-    optionalDependencies:
-      prisma: 4.16.2
-
-  '@prisma/engines-version@4.16.1-1.4bc8b6e1b66cb932731fb1bdbbc550d1e010de81': {}
-
-  '@prisma/engines@4.16.2': {}
+  '@telegram-auth/server@1.0.3': {}
 
   '@types/body-parser@1.19.5':
     dependencies:
@@ -1652,10 +1627,6 @@ snapshots:
   path-to-regexp@0.1.7: {}
 
   picomatch@2.3.1: {}
-
-  prisma@4.16.2:
-    dependencies:
-      '@prisma/engines': 4.16.2
 
   proxy-addr@2.0.7:
     dependencies:
