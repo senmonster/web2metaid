@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "scripts": {
     "start": "node dist/index.js",
-    "start:dev": "dotenv -e .env.development -- node dist/index.js",
-    "start:prod": "dotenv -e .env.production -- node dist/index.js",
-    "start:test": "dotenv -e .env.test -- node dist/index.js",
+    "start:dev": "dotenv -e .env.development -- nodemon dist/index.js",
+    "start:prod": "dotenv -e .env.production -- nodemon dist/index.js",
+    "start:test": "dotenv -e .env.test -- nodemon dist/index.js",
     "build": "tsc --sourceMap false",
     "build:watch": "tsc -w",
     "start:watch": "nodemon dist/index.js",

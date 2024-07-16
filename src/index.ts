@@ -1,15 +1,22 @@
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import express from 'express';
+import express, { CookieOptions } from 'express';
 import jwt from 'jsonwebtoken';
 // import { AuthDataValidator } from '@telegram-auth/server';
 // import { urlStrToAuthDataMap } from '@telegram-auth/server/utils';
 import 'dotenv/config';
 // load config
-import { CLIENT_URL, COOKIE_NAME, JWT_SECRET, SERVER_PORT } from './config';
-import { twitterOauth } from './oauth2';
-// import { getTwitterUser  } from './oauth2';
+import {
+  CLIENT_URL,
+  COOKIE_NAME,
+  JWT_SECRET,
+  SERVER_PORT,
+  upsertUserWithMongo,
+} from './config';
+import { getTwitterOAuthToken } from './oauth2';
+// import { twitterOauth } from './oauth2';
+import { getTwitterUser } from './oauth2';
 import User, { IUser } from './models/xUser';
 const app = express();
 const origin = [CLIENT_URL];
@@ -29,19 +36,76 @@ console.log('clent url', CLIENT_URL);
 app.get('/ping', (req, res) => {
   console.log('cookie ping', JSON.stringify(req.cookies));
 
-  res.json('pong ' + CLIENT_URL + 'token: ' + req.cookies[COOKIE_NAME]);
+  res.json('pong ' + CLIENT_URL + 'token: ' + JSON.stringify(req.cookies));
 });
 
 type UserJWTPayload = Pick<IUser, 'id' | 'type'> & { accessToken: string };
 
 // activate twitterOauth function when visiting the route
-app.get('/oauth/twitter', twitterOauth);
+// app.get('/oauth/twitter', twitterOauth);
+app.get('/oauth/twitter', async (req, res) => {
+  const code = req.query.code; // getting the code if the user authorized the app
+  console.log('code', JSON.stringify(code));
+  // 1. get the access token with the code
+  const twitterOAuthToken = await getTwitterOAuthToken(code as string);
+  console.log('twitterOAuthToken', twitterOAuthToken);
+  if (!twitterOAuthToken) {
+    // redirect if no auth token
+    return res.redirect(CLIENT_URL);
+  }
 
-// app.get('/set-cookie', (req, res) => {
-//   // 设置名为 'exampleCookie' 的 cookie，值为 'hello'
-//   res.cookie('exampleCookie', 'hello', { maxAge: 900000, httpOnly: true });
-//   res.send('Cookie has been set');
-// });
+  // 2. get the twitter user using the access token
+  const twitterUser = await getTwitterUser(twitterOAuthToken.access_token);
+  console.log('twitterUser', twitterUser);
+  if (!twitterUser) {
+    // redirect if no twitter user
+    return res.redirect(CLIENT_URL);
+  }
+
+  // 3. upsert the user in our db
+  const user = await upsertUserWithMongo(twitterUser);
+  console.log('updating user', user);
+
+  // 4. create cookie so that the server can validate the user
+
+  const { id, type } = user;
+  const token = jwt.sign(
+    {
+      // Signing the token to send to client side
+      id,
+      accessToken: twitterOAuthToken.access_token,
+      type,
+    },
+    process.env.JWT_SECRET!
+  );
+
+  // adding the cookie to response here
+  console.log('add token', token);
+
+  // cookie setting options
+
+  const cookieOptions: CookieOptions =
+    process.env.NODE_ENV !== 'production'
+      ? {
+          httpOnly: true,
+          // sameSite: false,
+          // secure: false,
+        }
+      : {
+          httpOnly: false,
+          secure: true,
+          sameSite: 'none',
+        };
+  console.log('cookieOptions', cookieOptions);
+  res.cookie(COOKIE_NAME, token, {
+    ...cookieOptions,
+    expires: new Date(Date.now() + 7200 * 1000),
+  });
+  // addCookieToRes(res, user, twitterOAuthToken.access_token);
+  // 5. finally redirect to the client
+
+  return res.redirect(CLIENT_URL);
+});
 
 app.get('/me', async (req, res) => {
   try {

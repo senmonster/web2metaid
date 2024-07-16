@@ -131,7 +131,7 @@ export async function twitterOauth(
   const cookieOptions: CookieOptions =
     process.env.NODE_ENV !== 'production'
       ? {
-          httpOnly: false,
+          httpOnly: true,
           sameSite: false,
           secure: false,
         }
