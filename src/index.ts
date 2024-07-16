@@ -107,7 +107,7 @@ app.get('/oauth/twitter', async (req, res) => {
   return res.redirect(CLIENT_URL);
 });
 
-app.get('/me', async (req, res) => {
+app.get('/web2metaid/me', async (req, res) => {
   try {
     console.log('cookie', JSON.stringify(req.cookies));
     const token = req.cookies[COOKIE_NAME];
