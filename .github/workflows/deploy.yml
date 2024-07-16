@@ -34,29 +34,29 @@ jobs:
           ssh-keyscan ${{secrets.REMOTE_HOST}} >> ~/.ssh/known_hosts
           cat ~/.ssh/known_hosts
 
-      - name: 将远程服务器的对应目录下所有文件及文件夹删除
-        run: | # type-room/server
-          ssh root@${{secrets.REMOTE_HOST}} "
-            cd ${{secrets.REMOTE_SERVER_DIR}};
-            pm2 kill;
-            rm -rf ./*;
-          "
+      # - name: 将远程服务器的对应目录下所有文件及文件夹删除
+      #   run: | # type-room/server
+      #     ssh www@${{secrets.REMOTE_HOST}} "
+      #       cd ${{secrets.REMOTE_SERVER_DIR}};
+      #       pm2 kill;
+      #       rm -rf ./*;
+      #     "
 
       - name: 将项目复制到远程服务器对应目录
         run: |
-          rsync -avz --exclude=".git" --exclude="node_modules" web2metaid-server/ root@${{secrets.REMOTE_HOST}}:${{secrets.REMOTE_SERVER_DIR}}
+          rsync -avz --exclude=".git" --exclude="node_modules" web2metaid-server/ www@${{secrets.REMOTE_HOST}}:${{secrets.REMOTE_SERVER_DIR}}
           ls -a
 
       # - name: 卸载旧版本的 Node.js
       #   run: |
-      #     ssh root@${{secrets.REMOTE_HOST}} "
+      #     ssh www@${{secrets.REMOTE_HOST}} "
       #       apt-get remove -y nodejs libnode-dev;
       #       apt-get autoremove -y;
       #     "    
 
       # - name: 安装 Node.js 、 pnpm 、 pm2
       #   run: |
-      #     ssh root@${{secrets.REMOTE_HOST}} "
+      #     ssh www@${{secrets.REMOTE_HOST}} "
       #       curl -fsSL https://deb.nodesource.com/setup_20.x | bash -;
       #       apt-get install -y nodejs;
       #       node -v;
@@ -67,7 +67,7 @@ jobs:
       
       - name: 启动 pm2
         run: |
-          ssh root@${{secrets.REMOTE_HOST}} "
+          ssh www@${{secrets.REMOTE_HOST}} "
             cd ${{secrets.REMOTE_SERVER_DIR}};
             ls -a;
             pnpm install;
@@ -82,7 +82,7 @@ jobs:
 
       # - name: 启动 pm2
       #   run: |
-      #     ssh root@${{secrets.REMOTE_HOST}} "
+      #     ssh www@${{secrets.REMOTE_HOST}} "
       #       cd  ${{secrets.REMOTE_SERVER_DIR}};
       #       ls -a;   
       #       pnpm build;     

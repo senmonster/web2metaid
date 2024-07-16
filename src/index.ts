@@ -3,8 +3,10 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import express from 'express';
 import jwt from 'jsonwebtoken';
+// import { AuthDataValidator } from '@telegram-auth/server';
+// import { urlStrToAuthDataMap } from '@telegram-auth/server/utils';
 import 'dotenv/config';
-
+// load config
 import { CLIENT_URL, COOKIE_NAME, JWT_SECRET, SERVER_PORT } from './config';
 import { twitterOauth } from './oauth2';
 // import { getTwitterUser  } from './oauth2';
@@ -67,6 +69,22 @@ app.get('/me', async (req, res) => {
     res.status(401).json('Not Authenticated');
   }
 });
+
+// app.get('/auth/telegram', async (req, res) => {
+//   const validator = new AuthDataValidator({ botToken: process.env.BOT_TOKEN });
+
+//   const data = urlStrToAuthDataMap(req.url);
+
+//   try {
+//     const user = await validator.validate(data);
+
+//     // The data is now valid and you can sign in the user.
+
+//     console.log(user);
+//   } catch (error) {
+//     console.error(error);
+//   }
+// });
 
 app.listen(SERVER_PORT, () =>
   console.log(`Server listening on port ${SERVER_PORT}`)
