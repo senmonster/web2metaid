@@ -23,10 +23,14 @@ app.use(
 );
 mongoose
   .connect(process.env.MONGO_CLOUD_URI!)
-  .then(() => console.log('MongoDB connected'))
+  .then(() => console.log('MongoDB connected', CLIENT_URL))
   .catch((err) => console.log(err));
+console.log('clent url', CLIENT_URL);
+app.get('/ping', (req, res) => {
+  console.log('cookie ping', JSON.stringify(req.cookies));
 
-app.get('/ping', (_, res) => res.json('pong'));
+  res.json('pong ' + CLIENT_URL + 'token: ' + req.cookies[COOKIE_NAME]);
+});
 
 type UserJWTPayload = Pick<IUser, 'id' | 'type'> & { accessToken: string };
 

@@ -49,6 +49,7 @@ export async function getTwitterOAuthToken(code: string) {
 
     return res.data;
   } catch (err) {
+    // console.log('err', err);
     return null;
   }
 }
@@ -126,10 +127,20 @@ export async function twitterOauth(
   console.log('add token', token);
 
   // cookie setting options
-  const cookieOptions: CookieOptions = {
-    httpOnly: false,
-    sameSite: false,
-  };
+
+  const cookieOptions: CookieOptions =
+    process.env.NODE_ENV !== 'production'
+      ? {
+          httpOnly: false,
+          sameSite: false,
+          secure: false,
+        }
+      : {
+          httpOnly: false,
+          secure: true,
+          sameSite: 'none',
+        };
+  console.log('cookieOptions', cookieOptions);
   res.cookie(COOKIE_NAME, token, {
     ...cookieOptions,
     expires: new Date(Date.now() + 7200 * 1000),
