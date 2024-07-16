@@ -6,9 +6,6 @@ module.exports = {
       watch: true, // 是否监视文件变化
       ignore_watch: ['logs', 'node_modules'],
       env: {
-        NODE_ENV: 'development',
-      },
-      env_production: {
         NODE_ENV: 'production',
       },
       error_file: './logs/err.log',
@@ -23,7 +20,7 @@ module.exports = {
       watch: false, // 不监视文件变化
       ignore_watch: ['node_modules'],
       env: {
-        NODE_ENV: 'development',
+        NODE_ENV: 'production',
       },
     },
   ],
