@@ -1,22 +1,20 @@
-import { TwitterUser } from './oauth2';
-import XUser from './models/xUser';
+import XUser, { IUser } from './models/User';
 // import { Response } from 'express';
 // import jwt from 'jsonwebtoken';
-// import  { IUser } from './models/user';
 
 export const CLIENT_URL = process.env.CLIENT_URL!;
 export const SERVER_PORT = process.env.SERVER_PORT!;
 
-export async function upsertUserWithMongo(twitterUser: TwitterUser) {
+export async function upsertUserWithMongo(user: IUser) {
   // create a new user in our database or return an old user who already signed up earlier
   try {
     const updatedUser = await XUser.findOneAndUpdate(
-      { id: twitterUser.id }, // 查询条件
+      { id: user.id }, // 查询条件
       {
-        username: twitterUser.username,
-        id: twitterUser.id,
-        name: twitterUser.name,
-        type: 'twitter',
+        username: user.username,
+        id: user.id,
+        name: user.name,
+        type: user.type,
       }, // 更新内容
       { new: true, upsert: true } // 选项：new 表示返回更新后的文档，upsert 表示如果文档不存在则创建
     );
@@ -32,7 +30,8 @@ export async function upsertUserWithMongo(twitterUser: TwitterUser) {
 export const JWT_SECRET = process.env.JWT_SECRET!;
 
 // cookie name
-export const COOKIE_NAME = 'oauth2_token';
+export const TWITTER_COOKIE_NAME = 'twitter_oauth2_token';
+export const TELEGRAM_COOKIE_NAME = 'telegram_oauth2_token';
 
 // step 4
 // export function addCookieToRes(

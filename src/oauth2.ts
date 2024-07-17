@@ -1,7 +1,8 @@
-import { CLIENT_URL, COOKIE_NAME, upsertUserWithMongo } from './config';
+import { CLIENT_URL, TWITTER_COOKIE_NAME, upsertUserWithMongo } from './config';
 import axios from 'axios';
 import { CookieOptions, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
+import { IUser } from 'models/User';
 
 // add your client id and secret here:
 const TWITTER_OAUTH_CLIENT_ID = process.env.TWITTER_CLIENT_ID!;
@@ -55,19 +56,14 @@ export async function getTwitterOAuthToken(code: string) {
 }
 
 // the shape of the response we should get
-export interface TwitterUser {
-  id: string;
-  name: string;
-  username: string;
-}
 
 // getting the twitter user from access token
 export async function getTwitterUser(
   accessToken: string
-): Promise<TwitterUser | null> {
+): Promise<Omit<IUser, 'type'> | null> {
   try {
     // request GET https://api.twitter.com/2/users/me
-    const res = await axios.get<{ data: TwitterUser }>(
+    const res = await axios.get<{ data: Omit<IUser, 'type'> }>(
       'https://api.twitter.com/2/users/me',
       {
         headers: {
@@ -107,7 +103,7 @@ export async function twitterOauth(
   }
 
   // 3. upsert the user in our db
-  const user = await upsertUserWithMongo(twitterUser);
+  const user = await upsertUserWithMongo({ ...twitterUser, type: 'twitter' });
   console.log('updating user', user);
 
   // 4. create cookie so that the server can validate the user
@@ -141,7 +137,7 @@ export async function twitterOauth(
           sameSite: 'none',
         };
   console.log('cookieOptions', cookieOptions);
-  res.cookie(COOKIE_NAME, token, {
+  res.cookie(TWITTER_COOKIE_NAME, token, {
     ...cookieOptions,
     expires: new Date(Date.now() + 7200 * 1000),
   });
